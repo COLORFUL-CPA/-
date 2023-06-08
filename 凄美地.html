@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>凄美地-爱爱特制版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #000;
+            color: #666;
+            text-align: center;
+        }
+
+        audio {
+            width: 80%;
+            margin: 50px 0;
+        }
+
+        .rq {
+            margin-top: 50px;
+            height: 420px;
+            overflow: hidden;
+        }
+
+        .rq li {
+            height: 30px;
+            line-height: 30px;
+            transition: 0.2s;
+        }
+
+        .rq li.at {
+            color: #fff;
+            transform: scale(1.3);
+        }
+
+        .rq ul {
+            transition: 0.2s;
+            list-style: none;
+        }
+    </style>
+    <script>
+        /* 歌词 */
+        var lrc =
+            "[00:05.10]原唱：郭顶\n[00:05.10]曾经我是不安河水\n[00:09.84]穿过森林误入你心\n[00:13.44]没计划扎营搁下了是非\n[00:18.30]一去不回\n[00:24.03]如今我是造梦的人呐\n[00:28.80]怅然若失流连忘返啊\n[00:32.64]等潮汐来临我就能记起\n[00:37.44]你的样子\n[00:50.40]我没看过\n[00:50.64]平坦山丘\n[00:54.09]怎么触摸\n[00:56.88]开花沼泽\n[01:01.62]嘿等我找到你\n[01:08.58]试探你眼睛\n[01:14.10]心无旁骛地相拥\n[01:19.53]那是我仅有的温柔也是我爱你的原因\n[01:31.56]在这凄美地\n[01:55.17]曾经这里是无人之地\n[01:59.97]为何没留下有效地址\n[02:03.69]肆意的消息迷失在十月\n[02:08.43]没有音讯\n[02:14.52]如今这里是风和日丽\n[02:19.26]等你再回来雨过迁徙\n[02:23.10]看夜幕将近我又能记起\n[02:27.93]你的样子\n[02:35.73]我还记得\n[02:41.19]平坦山丘\n[02:44.67]如今身在\n[02:47.37]开花沼泽\n[02:52.02]嘿等我找到你\n[02:59.01]试探你眼睛\n[03:03.90]心无旁骛地相拥\n[03:09.93]那是我仅有的温柔也是我爱你的原因\n[03:21.93]在这凄美地\n[03:26.97]在这之前\n[03:29.43]别说再见\n[03:31.83]我已再经不起离别\n[03:36.63]在这之前\n[03:39.09]别说再见\n[03:41.43]我已经开始了想念\n[03:46.20]在这之前\n[03:48.63]别说再见\n[03:50.97]请帮我停住这时间\n[03:55.26]就这样别安慰\n[04:06.54]嘿等我找到你\n[04:11.10]望住你眼睛\n[04:15.90]心无旁骛地相拥\n[04:21.96]那是我仅有的温柔也是我爱你的原因\n[04:33.99]如此不可及\n[04:38.91]如此不思议\n[04:43.92]让我坠落\n[04:44.73]在这凄美地";
+
+    </script>
+    <script>
+        /** { time: 0, lrc: "歌词" }, */
+        function parseLrc(lrc) {
+            var lines = lrc.split("\n");
+            var lrcs = [];
+            for (var i = 0; i < lines.length; i++) {
+                var timeReg = /\[(\d*:\d*\.\d*)\]/g;
+                var timeStr = lines[i].match(timeReg);
+                if (!timeStr) continue;
+                var timeStr = timeStr[0];
+                var time = parseTime(timeStr);
+                //console.log(time);
+                var lrc = lines[i].replace(timeReg, "");
+                lrcs.push({ time: time, lrc: lrc });
+            }
+            return lrcs;
+        }
+        /** 提取时间 */
+        function parseTime(timeStr) {
+            var m = +timeStr.slice(1, -1).split(":")[0] * 60;
+            var s = +timeStr.slice(4, -1);
+            var time = (m * 100 + s * 100) / 100;
+            return time;
+        }
+        /** 控制正在播放的歌词的样式 */
+        function ceked(arr) {
+            for (let i = 0; i < arr.length; i++) {
+                arr[i].className = "";
+            }
+        }
+        window.onload = function () {
+            var audio = document.getElementsByTagName("audio")[0];
+            var lrcs = parseLrc(lrc);
+            //console.log(lrcs);
+            var li = document.getElementsByTagName("li");
+            var ul = document.getElementsByTagName("ul")[0];
+            while (li.length < lrcs.length) {
+                var nli = document.createElement("li");
+                ul.appendChild(nli);
+            }
+            for (var i = 0; i < li.length; i++) {
+                li[i].innerHTML = lrcs[i].lrc;
+            }
+            /** 控制歌词同步跟随audio播放进度移动   */
+            audio.ontimeupdate = function () {
+                var time = audio.currentTime;
+                //console.log(time);
+                for (let i = 0; i < lrcs.length; i++) {
+                    const element = lrcs[i];
+                    if (Math.round(time) == Math.round(element.time)) {
+                        /* 控制正在播放的歌词居中 */
+                        i < 9
+                            ? /* 方式1 */
+                            (ul.style.transform =
+                                "translateY(-" + i * (li[i].clientHeight / 2) + "px)")
+                            : (ul.style.transform =
+                                "translateY(-" + (i - 5) * li[i].clientHeight + "px)");
+                        /* 方式2 */
+                        /* ? (ul.style.marginTop = -i * (li[i].clientHeight / 2) + "px")
+                           : (ul.style.marginTop = -(i - 5) * li[i].clientHeight + "px"); 
+                           */
+                        ceked(li);
+                        /* 正在播放的歌词放大 */
+                        li[i].className = "at";
+                    }
+                }
+            };
+        };
+
+    </script>
+</head>
+
+<body>
+    <audio controls
+        src="https://i01.lanzoug.com/06081200120313390bb/2023/06/08/c1fc12cc7cef178330936065e3d7b781.mp3?st=dxgckQD64JE0AuTOA5i2Og&e=1686202291&b=Cb5b5FXWBOQH2FepBnYDKlYjWuMBhwSGVuILuFPaU7RSnA_b_aCeYFvFmEBWMKdFNvUn8Nvge6AY5UKQ5uBXJWZw_c_c&fi=120313390&pid=120-230-53-227&up=2&mp=0&co=1">
+    </audio>
+    <div class="rq">
+        <ul class="bd">
+            <li></li>
+        </ul>
+    </div>
+
+
+</body>
+
+</html>
