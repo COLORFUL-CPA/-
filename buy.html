@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猩八克</title>
+    <link rel="shortcut icon" href="https://www-static.chinacdn.starbucks.com.cn/prod/assets/favicons/favicon.ico"
+        type="image/x-icon">
+    <!-- <link rel="stylesheet" href="buy.css">
+    <script src="buy.js"></script>
+    <script src="buyData.js"></script> -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            font-size: 22px;
+            color: rgb(42, 202, 217);
+        }
+
+        .flex {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .cbl {
+            background: rgba(239, 240, 240, 0.6);
+            width: 50px;
+            height: 40px;
+            text-align: center;
+            padding-top: 24px;
+        }
+
+        .xz {
+            background: white;
+            border-left: 4px solid red;
+            transition: 0.4s;
+        }
+
+        .wxz {
+            width: 0;
+            height: 0;
+            display: none;
+        }
+
+        .spq {
+            background: #fff;
+            width: 360px;
+            height: 99vh;
+            transform: translateY(-45px) translateX(48px);
+            overflow: auto;
+        }
+
+        .spq::-webkit-scrollbar {
+            display: none;
+        }
+
+        .p1 {
+            transform: translateY(-109px) translateX(48px);
+        }
+
+        .p2 {
+            transform: translateY(-173px) translateX(48px);
+        }
+
+        .p3 {
+            transform: translateY(-237px) translateX(48px);
+        }
+
+        .sp {
+            /* height: 125px; */
+            margin-bottom: 2px;
+            border-bottom: 1px solid rgba(213, 218, 220, 1);
+        }
+
+        .gwc {
+            width: 347px;
+            height: 40px;
+            margin: 0 33px;
+            position: absolute;
+            transform: translateY(460px);
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            float: left;
+            margin: 16px 0 10px;
+            border-radius: 50%;
+        }
+
+        #gwc {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            position: absolute;
+            top: -30px;
+            left: 15px;
+        }
+
+        button.up {
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+            background-color: rgb(195, 216, 189);
+            --y: 300px
+                /* animation: move 1s 0.2s linear 1; */
+        }
+
+        div.up {
+            /* border: red solid 3px; */
+            line-height: 1;
+            /* animation: fmove 1s 0.2s linear 1; */
+        }
+
+        @keyframes move {
+            from {
+                transform: translateY(0);
+            }
+
+            3% {
+                transform: translateY(-50px);
+            }
+
+            to {
+                transform: translateY(var(--y));
+            }
+        }
+
+        @keyframes fmove {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-300px);
+            }
+        }
+
+        button.down {
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+        }
+
+
+        p {
+            font-size: 16px;
+            line-height: 150%;
+        }
+    </style>
+    <!-- 商品数据 -->
+    <script>
+        var sp = [
+            {
+                name: "阿馥奇朵™",
+                imgSrc: "https://www.starbucks.com.cn/images/products/affogato.jpg",
+                h2: "灵感源自星巴克臻选®烘焙工坊,咖啡大师的巧思探",
+                xl: "月销 200+",
+                hpl: "好评率 98%",
+                jg: "¥&nbsp&nbsp27",
+            },
+            {
+                name: "麦芽雪冷萃™",
+                imgSrc: "https://www.starbucks.com.cn/images/products/cold-brew-malt.jpg",
+                h2: "冷萃咖啡,双份香草味冰淇淋,巧克力味苦味酒,麦芽成分",
+                xl: "月销 150+",
+                hpl: "好评率 90%",
+                jg: "¥&nbsp&nbsp21",
+            },
+            {
+                name: "冷萃浮乐朵™",
+                imgSrc: "https://www.starbucks.com.cn/images/products/cold-brew-float.jpg",
+                h2: "冷萃咖啡,香草味冰淇淋,给我凑够两行!",
+                xl: "月销 100+",
+                hpl: "好评率 88%",
+                jg: "¥&nbsp&nbsp19",
+            },
+            {
+                name: "冷萃浮乐朵™",
+                imgSrc: "https://www.starbucks.com.cn/images/products/cold-brew-float.jpg",
+                h2: "冷萃咖啡,香草味冰淇淋,给我凑够两行!",
+                xl: "月销 100+",
+                hpl: "好评率 88%",
+                jg: "¥&nbsp&nbsp19",
+            },
+            {
+                name: "冷萃浮乐朵™",
+                imgSrc: "https://www.starbucks.com.cn/images/products/cold-brew-float.jpg",
+                h2: "冷萃咖啡,香草味冰淇淋,给我凑够两行!",
+                xl: "月销 100+",
+                hpl: "好评率 88%",
+                jg: "¥&nbsp&nbsp19",
+            },
+            {
+                name: "冷萃浮乐朵™",
+                imgSrc: "https://www.starbucks.com.cn/images/products/cold-brew-float.jpg",
+                h2: "冷萃咖啡,香草味冰淇淋,给我凑够两行!",
+                xl: "月销 100+",
+                hpl: "好评率 88%",
+                jg: "¥&nbsp&nbsp19",
+            },
+            {
+                name: "冷萃浮乐朵™",
+                imgSrc: "https://www.starbucks.com.cn/images/products/cold-brew-float.jpg",
+                h2: "冷萃咖啡,香草味冰淇淋,给我凑够两行!",
+                xl: "月销 100+",
+                hpl: "好评率 88%",
+                jg: "¥&nbsp&nbsp19",
+            },
+            {
+                name: "冷萃浮乐朵™",
+                imgSrc: "https://www.starbucks.com.cn/images/products/cold-brew-float.jpg",
+                h2: "冷萃咖啡,香草味冰淇淋,给我凑够两行!",
+                xl: "月销 100+",
+                hpl: "好评率 88%",
+                jg: "¥&nbsp&nbsp19",
+            },
+            {
+                name: "冷萃浮乐朵™",
+                imgSrc: "https://www.starbucks.com.cn/images/products/cold-brew-float.jpg",
+                h2: "冷萃咖啡,香草味冰淇淋,给我凑够两行!",
+                xl: "月销 100+",
+                hpl: "好评率 88%",
+                jg: "¥&nbsp&nbsp19",
+            },
+            {
+                name: "冷萃浮乐朵™",
+                imgSrc: "https://www.starbucks.com.cn/images/products/cold-brew-float.jpg",
+                h2: "冷萃咖啡,香草味冰淇淋,给我凑够两行!",
+                xl: "月销 100+",
+                hpl: "好评率 88%",
+                jg: "¥&nbsp&nbsp19",
+            },
+            {
+                name: "冷萃浮乐朵™",
+                imgSrc: "https://www.starbucks.com.cn/images/products/cold-brew-float.jpg",
+                h2: "冷萃咖啡,香草味冰淇淋,给我凑够两行!",
+                xl: "月销 100+",
+                hpl: "好评率 88%",
+                jg: "¥&nbsp&nbsp19",
+            },
+            {
+                name: "冷萃浮乐朵™",
+                imgSrc: "https://www.starbucks.com.cn/images/products/cold-brew-float.jpg",
+                h2: "冷萃咖啡,香草味冰淇淋,给我凑够两行!",
+                xl: "月销 100+",
+                hpl: "好评率 88%",
+                jg: "¥&nbsp&nbsp19",
+            },
+            {
+                name: "冷萃浮乐朵™",
+                imgSrc: "https://www.starbucks.com.cn/images/products/cold-brew-float.jpg",
+                h2: "冷萃咖啡,香草味冰淇淋,给我凑够两行!",
+                xl: "月销 100+",
+                hpl: "好评率 88%",
+                jg: "¥&nbsp&nbsp19",
+            },
+        ];
+    </script>
+    <!-- 交互相关 -->
+    <script>
+        /**  检查元素是否有指定的类属性 */
+        function hasClass(obj, cl) {
+            return new RegExp("\\b" + cl + "\\b").test(obj.className);
+        }
+        /** 清除数组中所有元素的指定类属性 */
+        function removeAll(arr, cl) {
+            for (var i = 0; i < arr.length; i++) {
+                arr[i].classList.remove(cl);
+            }
+        }
+        /** 为数组中所有元素加上指定类属性 */
+        function addAll(arr, cl) {
+            for (var i = 0; i < arr.length; i++) {
+                arr[i].classList.add(cl);
+            }
+        }
+        /** 填充商品信息 */
+        function tcsp(obj, sp) {
+            obj.parentElement.firstElementChild.src = sp.imgSrc;
+            obj.children[0].innerHTML = sp.name;
+            obj.children[1].innerHTML = sp.h2;
+            obj.children[2].children[1].innerHTML = sp.xl;
+            obj.children[2].children[3].innerHTML = sp.hpl;
+            obj.children[3].children[1].innerHTML = sp.jg;
+        }
+        window.onload = function () {
+            /* 统一声明全局变量 */
+            var dom = {
+                cbl: document.querySelectorAll(".cbl"),
+                spq: document.querySelectorAll(".spq"),
+                gwc: document.querySelector(".gwc"),
+
+            };
+            /* 给侧边栏设置二级菜单 */
+            for (var i = 0; i < dom.cbl.length; i++) {
+                dom.cbl[i].addEventListener("click", function () {
+                    if (!hasClass(this, "xz")) {
+                        removeAll(dom.cbl, "xz");
+                        this.classList.add("xz");
+                        addAll(dom.spq, "wxz");
+                        this.firstElementChild.classList.remove("wxz");
+                    }
+                });
+            }
+            /* 补齐推荐栏商品空位 */
+            while (sp.length > dom.spq[0].getElementsByClassName("sp").length) {
+                var nsp = document.createElement("div");
+                nsp.className = "sp";
+                nsp.innerHTML +=
+                    "<img src=' alt='><div class='spnb'><h2></h2><p></p><div class='flex'><p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p><p class='xl'></p><p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p><p class='hpl'></p></div><div class='flex'><p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p><p class='jg'></p><p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p><div class='down'><button class='down wxz'><b>-</b></button></div><p>&nbsp&nbsp&nbsp</p><p class='nbr wxz'></p><p>&nbsp&nbsp&nbsp</p><div class='up'><button class='up'><b>+</b></button></div></div></div>";
+                dom.spq[0].appendChild(nsp);
+            }
+            var spnb = document.querySelectorAll(".spnb");
+            var up = document.querySelectorAll("button.up");
+            var fup = document.querySelectorAll("div.up");
+            var down = document.querySelectorAll("button.down");
+            var fdown = document.querySelectorAll("div.down");
+            var nbr = document.querySelectorAll(".nbr");
+            /* 填充商品信息  */
+            for (var i = 0; i < sp.length; i++) {
+                tcsp(spnb[i], sp[i]);
+            }
+            /* 设置+号按钮功能 */
+            for (var i = 0; i < up.length; i++) {
+                up[i].nbr = i;
+                up[i].addEventListener("click", function () {
+                    down[this.nbr].classList.remove("wxz");
+                    nbr[this.nbr].classList.remove("wxz");
+                    nbr[this.nbr].innerHTML++;
+                    var h = up[this.nbr].offsetTop
+                    up[this.nbr].style.setProperty("--y", h + "px")
+                    up[this.nbr].style.animation = "move 0.5s 0.1s 1"
+                });
+            }
+            /* 设置-号按钮功能  */
+            for (var i = 0; i < down.length; i++) {
+                down[i].nbr = i;
+                down[i].addEventListener("click", function () {
+                    nbr[this.nbr].innerHTML--;
+                    if (nbr[this.nbr].innerHTML < 1) {
+                        nbr[this.nbr].innerHTML = 0;
+                        down[this.nbr].classList.add("wxz");
+                        nbr[this.nbr].classList.add("wxz");
+                    }
+                });
+            }
+            /* 添加购物车动画 */
+            for (var i = 0; i < fup.length; i++) {
+                fup[i].nbr = i;
+                fup[i].addEventListener("click", function () {
+                    fup[this.nbr].style.animation = "fmove 0.5s 0.1s 1"
+                })
+            }
+        };
+
+    </script>
+</head>
+
+<body>
+    <div class="cbl xz">推荐
+        <div class="spq">
+        </div>
+    </div>
+    <div class="cbl">热销
+        <div class="spq p1 wxz">
+            <div class="sp">1暂无</div>
+            <div class="sp">2暂无</div>
+            <div class="sp">3暂无</div>
+            <div class="sp">4暂无</div>
+            <div class="sp">5暂无</div>
+            <div class="sp">6暂无</div>
+            <div class="sp">7暂无</div>
+            <div class="sp">8暂无</div>
+            <div class="sp">9暂无</div>
+            <div class="sp">10暂无</div>
+            <div class="sp">11暂无</div>
+            <div class="sp">12暂无</div>
+        </div>
+    </div>
+    <div class="cbl">折扣
+        <div class="spq p2 wxz">
+            <div class="sp">1暂无</div>
+            <div class="sp">2暂无</div>
+            <div class="sp">3暂无</div>
+            <div class="sp">4暂无</div>
+            <div class="sp">5暂无</div>
+            <div class="sp">6暂无</div>
+            <div class="sp">7暂无</div>
+            <div class="sp">8暂无</div>
+            <div class="sp">9暂无</div>
+            <div class="sp">10暂无</div>
+            <div class="sp">11暂无</div>
+            <div class="sp">12暂无</div>
+        </div>
+    </div>
+    <div class="cbl">特殊
+        <div class="spq p3 wxz">
+            <div class="sp">1暂无</div>
+            <div class="sp">2暂无</div>
+            <div class="sp">3暂无</div>
+            <div class="sp">4暂无</div>
+            <div class="sp">5暂无</div>
+            <div class="sp">6暂无</div>
+            <div class="sp">7暂无</div>
+            <div class="sp">8暂无</div>
+            <div class="sp">9暂无</div>
+            <div class="sp">10暂无</div>
+            <div class="sp">11暂无</div>
+            <div class="sp">12暂无</div>
+        </div>
+    </div>
+    <div class="gwc flex">
+        <div style="flex: 1;background: rgba(32, 24, 24, 0.8); border-radius: 15px 0 0 15px;">
+            <img id="gwc"
+                src="https://img-server-02.oss-cn-hangzhou.aliyuncs.com/element_pic/69/32/30/80/bf3bf19f4ac895636cb8ab463a3bdfb1.jpg_w800"
+                alt="">
+        </div>
+        <div style="flex: 3; background: rgba(32, 24, 24, 0.8);"></div>
+        <div style="flex: 1; background: rgba(23, 182, 71, 0.821); text-align: center;border-radius: 0 15px 15px 0;">
+            <h2 style="color: #fff; font-size: 18px; margin-top: 7px;">去结算</h2>
+        </div>
+    </div>
+</body>
+
+</html>
